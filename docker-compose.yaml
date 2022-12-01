@@ -1,9 +1,9 @@
 version: "3.9"
-
+# ref: https://docs.docker.com/compose/compose-file
 services:
   app:
+    image: gotodo
     build:
-      context: ./srcfile
       args:
         - target=dev
     volumes:
