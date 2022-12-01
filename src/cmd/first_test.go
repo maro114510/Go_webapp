@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"golang.org/x/sync/errgroup"
-	"github.com/maro114510/Go_webapp/src/cmd"
+	"github.com/maro114510/Go_webapp/src"
 )
 
 func TestRun( t *testing.T ) {
@@ -17,7 +17,7 @@ func TestRun( t *testing.T ) {
 	eg, ctx := errgroup.WithContext( ctx )
 
 	eg.Go( func() error {
-		return Run( ctx )
+		return run( ctx )
 	} )
 
 	in := "message"
