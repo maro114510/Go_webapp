@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"golang.org/x/sync/errgroup"
-	"github.com/maro114510/Go_webapp/src/cmd"
+	"srcfile/cmd"
 )
 
 func TestRun( t *testing.T ) {
@@ -17,11 +17,11 @@ func TestRun( t *testing.T ) {
 	eg, ctx := errgroup.WithContext( ctx )
 
 	eg.Go( func() error {
-		return Run( ctx )
+		return cmd.Run( ctx )
 	} )
 
-	in := "message"
-	rsp, err := http.Get( "http://localhost:18080" + in )
+	in := "message1"
+	rsp, err := http.Get( "http://localhost:18080/" + in )
 	if err != nil {
 		t.Errorf( "faild to get: %+v\n", err )
 	}
@@ -29,7 +29,7 @@ func TestRun( t *testing.T ) {
 
 	got, err := io.ReadAll( rsp.Body )
 	if err != nil {
-		t.Faitalf( "faild to read body: %+v\n", err )
+		t.Fatalf( "faild to read body: %+v\n", err )
 	}
 
 	wont := fmt.Sprintf( "Hello, %s!", in )
@@ -39,7 +39,7 @@ func TestRun( t *testing.T ) {
 
 	cancel()
 	if err := eg.Wait(); err != nil {
-		t.Faital( err )
+		t.Fatal( err )
 	}
 }
 

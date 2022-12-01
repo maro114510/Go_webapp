@@ -1,5 +1,5 @@
 //!/usr/local/go/bin/go
-package main
+package cmd
 
 import (
 	"os"
@@ -9,9 +9,11 @@ import (
 	"net/http"
 
 	"golang.org/x/sync/errgroup"
+	// "srcfile/libs"
 )
 
 func execute( args int, argv []string ) int {
+	// libs.Point()
 	if err := Run( context.Background() ); err != nil {
 		log.Printf( "faild to terminate server:  %+v\n", err )
 	}
@@ -22,7 +24,7 @@ func Run( ctx context.Context ) error {
 	s := &http.Server{
 		Addr: ":18080",
 		Handler: http.HandlerFunc( func ( w http.ResponseWriter, r *http.Request ) {
-			fmt.Fprintf( w, "hello, %s!", r.URL.Path[ 1: ] )
+			fmt.Fprintf( w, "Hello, %s!", r.URL.Path[ 1: ] )
 		} ),
 	}
 

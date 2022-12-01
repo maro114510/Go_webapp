@@ -8,7 +8,7 @@ import (
 
 func execute( args int, argv []string ) int {
 	fmt.Println( "Execute!" )
-	greeting.Do()
+	// greeting.Do()
 	return 0
 }
 
