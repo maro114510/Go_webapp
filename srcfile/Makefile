@@ -5,6 +5,8 @@ TARGET = $(shell basename `pwd`)
 
 .PHONY: build format test clean ppwd cp init tidy
 
+.PHONY: help build-local up down logs ps
+
 SRCDIR  = ./cmd
 BINDIR  = ./bin
 TESTDIR = ./test
@@ -49,6 +51,33 @@ format:
 cp:
 	@$(BIN)
 
+#############################################################################
+
+DOCKER_TAG := latest
+
+build:
+	docker build -t srcfile:${DOCKER_TAG} \
+		--target deploy ./
+
+build-local:
+	docker-compose build --no-cache
+
+up:
+	docker-compose up -d
+
+down:
+	docker-compose down
+
+logs:
+	docker-compose logs -f
+
+ps:
+	docker-compose ps
+
+
+
+
+#############################################################################
 
 
 # End of Make

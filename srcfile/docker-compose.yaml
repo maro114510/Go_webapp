@@ -10,3 +10,6 @@ services:
       - .:/app
     ports:
       - "18000:80"
+
+
+# End of docker-compose 
