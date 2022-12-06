@@ -1,3 +1,4 @@
+//!/usr/local/go/bin/go
 package main
 
 import (
@@ -21,6 +22,7 @@ func main() {
 	if err != nil {
 		log.Fatalf( "failed to listen port %s: %v", p, err )
 	}
+
 	url := fmt.Sprintf( "http://%s", l.Addr().String() )
 	log.Printf( "start with: %v", url )
 	if err := run( context.Background(), l ); err != nil {
@@ -35,6 +37,7 @@ func run( ctx context.Context, l net.Listener ) error {
 			fmt.Fprintf( w, "Hello, %s!", r.URL.Path[ 1: ] )
 		}),
 	}
+
 	eg, ctx := errgroup.WithContext( ctx )
 	eg.Go( func() error {
 		if err := s.Serve( l ); err != nil &&
@@ -51,3 +54,7 @@ func run( ctx context.Context, l net.Listener ) error {
 	}
 	return eg.Wait()
 }
+
+
+
+// End_Of_Script

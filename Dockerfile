@@ -17,11 +17,11 @@ RUN apt-get update
 
 COPY --from=deploy-builder /app/app .
 
-CMD ["./app"]
+CMD [ "./app" ]
 
 # ---------------------------------------------------
 
 FROM golang:1.18.2 as dev
 WORKDIR /app
 RUN go install github.com/cosmtrek/air@latest
-CMD ["air"]
+CMD [ "air" ]
