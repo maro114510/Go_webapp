@@ -37,19 +37,24 @@ func TestServer_Run( t *testing.T ) {
 		t.Errorf( "failed to get: %+v ", err )
 	}
 	defer rsp.Body.Close()
+
 	got, err := io.ReadAll( rsp.Body )
 	if err != nil {
 		t.Fatalf( "failed to read body: %v", err )
 	}
+
 	want := fmt.Sprintf( "Hello, %s!", in )
 	if string( got ) != want {
 		t.Errorf( "want %q, but got %q", want, got )
 	}
+
 	cancel()
+
 	if err := eg.Wait(); err != nil {
 		t.Fatal( err )
 	}
 }
+
 
 
 // End_Of_Script
