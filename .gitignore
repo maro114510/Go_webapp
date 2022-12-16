@@ -1,9 +1,5 @@
 # Copyright (c) Nohira Atsuki. All rights reserved.
 
-### macOS ###
-# General
-.DS_Store
-
 ### Python ###
 # cache
 # __pycache__
@@ -18,9 +14,9 @@
 
 ### Golang ### 
 # Unignore all with extensions
-# * 
-# !*/
-# !*.*
+* 
+!*/
+!*.*
 # *.txt
 # !Makefile
 
@@ -39,6 +35,9 @@
 # *.mp4
 # *.json
 
+### macOS ###
+# General
+.DS_Store
 
 
 # End Of Ignore
