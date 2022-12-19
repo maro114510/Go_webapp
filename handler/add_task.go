@@ -14,7 +14,7 @@ import (
 
 type AddTask struct {
 	Store		*store.TaskStore
-	Validator	*validator.Validator
+	Validator	*validator.Validate
 } /* AddTask */
 
 func ( at *AddTask ) ServeHTTP( w http.ResponseWriter, r *http.Request ) {
@@ -32,15 +32,15 @@ func ( at *AddTask ) ServeHTTP( w http.ResponseWriter, r *http.Request ) {
 
 	err := at.Validator.Struct( b )
 	if err != nil {
-		RespondJSON( ctx, w &ErrResponse{
+		RespondJSON( ctx, w, &ErrResponse{
 			Message: err.Error(),
-		}, http.Status.BadRequest )
+		}, http.StatusBadRequest )
 		return
 	}
 
 	t := &entity.Task{
 		Title:		b.Title,
-		Status:		b.entity.TaskStatusTodo,
+		Status:		"todo",
 		Created:	time.Now(),
 	}
 
@@ -54,7 +54,7 @@ func ( at *AddTask ) ServeHTTP( w http.ResponseWriter, r *http.Request ) {
 
 	rsp := struct {
 		ID int `json:"id"`
-	}{ ID: id }
+	}{ ID: int(id) }
 	RespondJSON( ctx, w, rsp, http.StatusOK )
 
 } /* ServeHTTP */

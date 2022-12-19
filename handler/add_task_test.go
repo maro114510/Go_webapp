@@ -14,7 +14,7 @@ import (
 )
 
 
-func TestAddTask( t *test.T ) {
+func TestAddTask( t *testing.T ) {
 	t.Parallel()
 
 	type want struct {
@@ -29,34 +29,34 @@ func TestAddTask( t *test.T ) {
 		"ok": {
 			reqFile: "testdata/add_task/ok_req.json.golden",
 			want: want{
-				status: http.StatusOK,
-				rspFile: "testdat/add_task/ok_rsq.json.golden",
+				status:  http.StatusOK,
+				rspFile: "testdata/add_task/ok_rsp.json.golden",
 			},
 		},
 		"badRequest": {
 			reqFile: "testdata/add_task/bad_req.json.golden",
 			want: want{
-				status: http.StatusBadRequest,
-				rspFile: "testdat/add_task/bad_req_rsq.json.golden",
+				status:  http.StatusBadRequest,
+				rspFile: "testdata/add_task/bad_rsp.json.golden",
 			},
 		},
 	}
 
 	for n, tt := range tests {
 		tt := tt
-		t.Run( n, func( t *test.T ){
+		t.Run( n, func( t *testing.T ){
 			t.Parallel()
 
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(
 				http.MethodPost,
 				"/tasks",
-				bytes.NewReader( testutil.LoadFile( t, tt, reqFile ) )
+				bytes.NewReader( testutil.LoadFile( t, tt.reqFile ) ),
 			)
 
 			sut := AddTask{
 				Store: &store.TaskStore{
-					Task: map[ entity.TaskID ]*entity.Task{},
+					Tasks: map[ entity.TaskID ]*entity.Task{},
 				},
 				Validator: validator.New(),
 			}
@@ -67,7 +67,7 @@ func TestAddTask( t *test.T ) {
 				t,
 				resp,
 				tt.want.status,
-				testutil.LoadFile( t, tt, want.rspFile ),
+				testutil.LoadFile( t, tt.want.rspFile ),
 			)
 		} )
 	}

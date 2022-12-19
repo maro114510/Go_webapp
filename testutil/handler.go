@@ -13,8 +13,8 @@ import (
 )
 
 
-func AssertJSON( t *testing.T want, got []byte ) {
-	t.Helpler()
+func AssertJSON( t *testing.T, want, got []byte ) {
+	t.Helper()
 
 	var jw, jg any
 	if err := json.Unmarshal( want, &jw ); err != nil {
@@ -24,18 +24,18 @@ func AssertJSON( t *testing.T want, got []byte ) {
 		t.Fatalf( "cannot unmarshal want %q: %v", want, err )
 	}
 
-	if diff := cmp.Diff( jg, jw ); diff != nil {
+	if diff := cmp.Diff( jg, jw ); diff != "" {
 		t.Errorf( "got differs: ( -got +want )\n%s", diff )
 	}
 } /* AssertJSON */
 
 func AssertResponse( t *testing.T, got *http.Response, status int, body []byte ) {
-	t.Helpler()
+	t.Helper()
 
-	t.Cleanup( func() { _ = got.body.Close() } )
+	t.Cleanup( func() { _ = got.Body.Close() } )
 	gb, err := io.ReadAll( got.Body )
 	if err != nil {
-		t.Fatalf( err )
+		t.Fatal( err )
 	}
 
 	if got.StatusCode != status {
@@ -50,12 +50,12 @@ func AssertResponse( t *testing.T, got *http.Response, status int, body []byte )
 } /* AssertResponse */
 
 
-func LoadFile( t *testing.T, path stirng ) []byte {
-	t.Helpler()
+func LoadFile( t *testing.T, path string ) []byte {
+	t.Helper()
 
 	bt, err := os.ReadFile( path )
 	if err != nil {
-		f.Fatalf( "cannot read from %q: %v", path, err )
+		t.Fatalf( "cannot read from %q: %v", path, err )
 	}
 	return bt
 } /* LoadFile */

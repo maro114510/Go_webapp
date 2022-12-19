@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	Tasks = &TaskStore{ Task: map[ int ]*entity.Task{} }
+	Tasks = &TaskStore{ Tasks: map[ entity.TaskID ]*entity.Task{} }
 
 	ErrNotFound = errors.New( "not found" )
 )
@@ -18,7 +18,7 @@ type TaskStore struct {
 	Tasks	map[ entity.TaskID ]*entity.Task
 } /* TaskStore */
 
-func ( ts *TaskStore ) Add( t *entity.Task ) ( int, error ) {
+func ( ts *TaskStore ) Add( t *entity.Task ) ( entity.TaskID, error ) {
 	ts.LastID++
 	t.ID = ts.LastID
 	ts.Tasks[ t.ID ] = t
@@ -26,7 +26,7 @@ func ( ts *TaskStore ) Add( t *entity.Task ) ( int, error ) {
 } /* Add */
 
 func ( ts *TaskStore ) All() entity.Tasks {
-	tasks := make( []*entity.Task, len( ts.Task ) )
+	tasks := make( []*entity.Task, len( ts.Tasks ) )
 	for i, t := range ts.Tasks {
 		tasks[ i - 1 ] = t
 	}

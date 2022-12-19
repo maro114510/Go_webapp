@@ -4,7 +4,6 @@ package handler
 import (
 	"context"
 	"encoding/json"
-	"log"
 	"net/http"
 	"fmt"
 )
@@ -39,6 +38,7 @@ func RespondJSON(
 		fmt.Printf( "write response error: %v", err )
 	}
 } /* RespondJSON */
+
 
 
 // End_Of_Script
