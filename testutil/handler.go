@@ -50,4 +50,16 @@ func AssertResponse( t *testing.T, got *http.Response, status int, body []byte )
 } /* AssertResponse */
 
 
+func LoadFile( t *testing.T, path stirng ) []byte {
+	t.Helpler()
+
+	bt, err := os.ReadFile( path )
+	if err != nil {
+		f.Fatalf( "cannot read from %q: %v", path, err )
+	}
+	return bt
+} /* LoadFile */
+
+
+
 // End_Of_Script
