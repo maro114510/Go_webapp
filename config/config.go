@@ -8,7 +8,7 @@ import (
 type Config struct {
 	Env		string	`env:"TODO_ENV" envDefault:"dev"`
 	Port	int		`env:"PORT" envDefault:"80"`
-}
+} /* Config */
 
 func New() ( *Config, error ) {
 	cfg := &Config{}
@@ -16,7 +16,7 @@ func New() ( *Config, error ) {
 		return nil, err
 	}
 	return cfg, nil
-}
+} /* News */
 
 
 // End_Of_Script
