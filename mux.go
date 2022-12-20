@@ -13,7 +13,7 @@ func NewMux() http.Handler {
 	} )
 
 	return mux
-}
+} /* NewMux */
 
 
 // End_Of_Script
