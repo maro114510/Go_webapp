@@ -11,9 +11,12 @@ import (
 	"github.com/maro114510/Go_webapp/clock"
 	"github.com/maro114510/Go_webapp/config"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmiron/sqlx"
+	"github.com/jmoiron/sqlx"
 )
 
+var (
+	ErrAlreadyEntry = errors.New( "duplicate entry" )
+)
 
 func New( ctx context.Context, cfg *config.Config ) ( *sqlx.DB, func(), error ) {
 	db, err := sql.Open( "mysql",
@@ -42,24 +45,24 @@ func New( ctx context.Context, cfg *config.Config ) ( *sqlx.DB, func(), error ) 
 } /* New */
 
 type Beginner interface {
-	BeginTx( ctx context.Context, query string ) ( *sqlx.Stmt, error )
+	BeginTx( ctx context.Context, opts *sql.TxOptions ) ( *sql.Tx, error )
 } /* Beginner */
 
 type Preparer interface {
-	Preparex( ctx context.Context, query string ) ( *sqlx.Stmt, error )
+	PreparexContext( ctx context.Context, query string ) ( *sqlx.Stmt, error )
 } /* Preparer */
 
 type Execer interface {
 	ExecContext( ctx context.Context, query string, args ...any ) ( sql.Result, error )
-	NameExecContext( ctx context.Context, query string, arg interface{} ) ( sql.Result, error )
+	NamedExecContext( ctx context.Context, query string, arg interface{} ) ( sql.Result, error )
 } /* Execer */
 
 type Queryer interface {
 	Preparer
-	QueryContext( ctx context.Context, query string, args ..any ) ( *sqlx.Rows, error )
-	QueryRowContext( ctx context.Context, query string, args ...any ) *sqlx.Row
-	GetContent( ctx context.Context, dest interface{}, query string, args ...any ) error
-	SelectContent( ctx context.Context, dest interface{}, query string, args ...any ) error
+	QueryxContext( ctx context.Context, query string, args ...any ) ( *sqlx.Rows, error )
+	QueryRowxContext( ctx context.Context, query string, args ...any ) *sqlx.Row
+	GetContext( ctx context.Context, dest interface{}, query string, args ...any ) error
+	SelectContext( ctx context.Context, dest interface{}, query string, args ...any ) error
 } /* Queryer */
 
 var (

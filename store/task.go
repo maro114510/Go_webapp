@@ -9,7 +9,7 @@ import (
 
 
 func ( r *Repository ) AddTask(
-	ctx context.Context, db Execer, t *entity.Task
+	ctx context.Context, db Execer, t *entity.Task,
 ) error {
 	t.Created = r.Clocker.Now()
 	t.Modified = r.Clocker.Now()
