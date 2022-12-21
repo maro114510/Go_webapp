@@ -15,10 +15,11 @@ import (
 func TestRepository_ListTasks( t *testing.T ) {
 	ctx := context.Background()
 
-	tx, err := testutil.OpenDBForTest( t ).BeginTxx( ctx, nil )
-	t.Cleanup( func() { _ = tx.Rollback() } )
+	tx, err := testutil.OpenDBForTest(t).BeginTxx(ctx, nil)
+	// このテストケースが完了したら元に戻す
+	t.Cleanup(func() { _ = tx.Rollback() })
 	if err != nil {
-		t.Fatal( err )
+		t.Fatal(err)
 	}
 	wants := prepareTasks( ctx, t, tx )
 
