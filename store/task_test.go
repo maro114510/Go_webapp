@@ -5,11 +5,14 @@ import (
 	"context"
 	"testing"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/maro114510/Go_webapp/clock"
 	"github.com/maro114510/Go_webapp/entity"
 	"github.com/maro114510/Go_webapp/testutil"
 	"github.com/google/go-cmp/cmp"
+	"github.com/jmoiron/sqlx"
 )
+
 
 
 func TestRepository_ListTasks( t *testing.T ) {
@@ -91,6 +94,58 @@ func prepareTasks( ctx context.Context, t *testing.T, con Execer ) entity.Tasks 
 	wants[ 2 ].ID = entity.TaskID( id + 2 )
 	return wants
 } /* prepareTasks */
+
+func TestRepository_AddTask( t *testing.T ) {
+	t.Parallel()
+	ctx := context.Background()
+
+	c := clock.FixedClocker{}
+	var wantID int64 = 20
+	okTask := &entity.Task{
+		Title:		"ok task",
+		Status:		"todo",
+		Created:	c.Now(),
+		Modified:	c.Now(),
+	}
+
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatal( err )
+	}
+
+	t.Cleanup( func() { _ = db.Close() } )
+	mock.ExpectExec(
+		`
+		INSERT INTO task (
+			title,
+			status,
+			created,
+			modified
+		) VALUES (
+			?,
+			?,
+			?,
+			?
+		);
+		`
+	).WithArgs(
+		okTask.Title,
+		okTask.Status,
+		okTask.Created,
+		okTask.Modified,
+	).WillReturnResult(
+		sqlmock.NewResult(
+			wantID,
+			1,
+		)
+	)
+
+	xdb := sqlx.NewDb( db, "mysql" )
+	r := &Repository{ Clocker: c }
+	if err := r.AddTask( ctx, xdb, okTask ); err != nil {
+		t.Errorf( "want no error, but get %v", err )
+	}
+} /* TestRepository_AddTask */
 
 
 // End_Of_Script
