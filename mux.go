@@ -25,7 +25,7 @@ func NewMux() http.Handler {
 	mux.Get( "/tasks", lt.ServeHTTP )
 
 	return mux
-}
+} /* NewMux */
 
 
 // End_Of_Script

@@ -24,7 +24,7 @@ func NewServer( l net.Listener, mux http.Handler ) *Server {
 		srv: &http.Server{ Handler: mux },
 		l: l,
 	}
-}
+} /* NewServer */
 
 func ( s *Server ) Run( ctx context.Context ) error {
 	ctx, stop := signal.NotifyContext( ctx, os.Interrupt, syscall.SIGTERM )
@@ -48,7 +48,8 @@ func ( s *Server ) Run( ctx context.Context ) error {
 
 	// グレースフルシャットダウンを待機
 	return eg.Wait()
-}
+
+} /* Run */
 
 
 

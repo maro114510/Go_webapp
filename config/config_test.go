@@ -22,7 +22,7 @@ func TestNew( t *testing.T ) {
 	if got.Env != wantEnv {
 		t.Errorf( "want %s, but %s", wantEnv, got.Env )
 	}
-}
+} /* TestNew */
 
 
 // End_Of_Script

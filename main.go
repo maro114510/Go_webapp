@@ -17,7 +17,7 @@ func main() {
 		log.Printf( "failed to terminated server: %v", err )
 		os.Exit( 1 )
 	}
-}
+} /* main */
 
 func run( ctx context.Context ) error {
 	cfg, err := config.New()
@@ -36,7 +36,7 @@ func run( ctx context.Context ) error {
 	mux := NewMux()
 	s := NewServer( l, mux )
 	return s.Run( ctx )
-}
+} /* run */
 
 
 
