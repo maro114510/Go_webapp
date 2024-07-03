@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/life_collector"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "maro114510"
+    assignees:
+      - "maro114510"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "maro114510"
+    assignees:
+      - "maro114510"
